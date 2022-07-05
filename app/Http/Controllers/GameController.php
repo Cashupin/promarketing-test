@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGamePost;
+use App\Http\Requests\StoreGamePut;
 use App\Models\Game;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -15,6 +17,8 @@ class GameController extends Controller
      */
     public function index()
     {
+        $games = Game::all();
+        return view('mantenedor.game.index', compact('games'));
     }
 
     /**
@@ -24,7 +28,8 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        $statuses = Status::all();
+        return view('mantenedor.game.create', compact('statuses'));
     }
 
     /**
@@ -33,9 +38,10 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGamePost $request)
     {
-        //
+        Game::create($request->validated());
+        return back()->with("status-ok", 'Juego creado correctamente');
     }
 
     /**
@@ -46,7 +52,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        return view('mantenedor.game.show', compact('game'));
     }
 
     /**
@@ -57,7 +63,8 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $statuses = Status::all();
+        return view('mantenedor.game.edit', compact('game', 'statuses'));
     }
 
     /**
@@ -67,9 +74,11 @@ class GameController extends Controller
      * @param  \App\Models\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Game $game)
+    public function update(StoreGamePut $request, Game $game)
     {
-        //
+        $game->update($request->validated());
+        return back()->with("status-ok", 'Juego modificado correctamente');
+
     }
 
     /**
@@ -80,6 +89,7 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+        return back()->with("status-ok", 'Juego eliminado correctamente');
     }
 }

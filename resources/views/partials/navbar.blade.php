@@ -20,7 +20,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Games</a></li>
+                        <li><a class="dropdown-item" href="{{ route('game.index') }}">Games</a></li>
                     </ul>
                 </li>
             </ul>
