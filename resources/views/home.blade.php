@@ -7,5 +7,17 @@
                 Juegos Disponibles
             </h1>
         </div>
+
+    </div>
+    <div class="row">
+        @foreach ($games as $game)
+            <div class="col-12 col-md-4 card m-3 py-2">
+                <div class="card-header">
+                    {{ $game->name }}
+                </div>
+                <img src="{{ $game->url_image }}" alt="{{ $game->name }}" class="thumbnail">
+                <a href="{{ $game->url_game }}" target="_blank" class="btn btn-primary btn-block">Ir al Juego</a>
+            </div>
+        @endforeach
     </div>
 @endsection
