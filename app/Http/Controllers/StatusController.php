@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStatusPost;
+use App\Http\Requests\StoreStatusPut;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class StatusController extends Controller
     public function index()
     {
         $statuses = Status::all();
-        dd($statuses);
+        return view('mantenedor.status.index', compact('statuses'));
     }
 
     /**
@@ -25,7 +27,7 @@ class StatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('mantenedor.status.create');
     }
 
     /**
@@ -34,9 +36,10 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStatusPost $request)
     {
-        //
+        Status::create($request->validated());
+        return back()->with("status-ok", 'Estado creado correctamente');
     }
 
     /**
@@ -47,7 +50,7 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        //
+        return view('mantenedor.status.show', compact('status'));
     }
 
     /**
@@ -58,7 +61,7 @@ class StatusController extends Controller
      */
     public function edit(Status $status)
     {
-        //
+        return view('mantenedor.status.edit', compact('status'));
     }
 
     /**
@@ -68,9 +71,10 @@ class StatusController extends Controller
      * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(StoreStatusPut $request, Status $status)
     {
-        //
+        $status->update($request->validated());
+        return back()->with('status-ok', 'Estado modificado correctamente');
     }
 
     /**
@@ -81,6 +85,10 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        if (count($status->games) != 0) {
+            return back()->with('status-error', 'No puedes eliminar un estado si tiene juegos asignados');
+        }
+        $status->delete();
+        return back()->with('status-ok', 'Estado eliminado correctamente');
     }
 }
