@@ -15,10 +15,16 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::all();
-        return view('mantenedor.game.index', compact('games'));
+        $statuses = Status::all();
+        $games = Game::searchIdGame($request->id)
+        ->searchNameGame($request->name)
+        ->searchDescriptionGame($request->description)
+        ->searchStatusGame($request->status_id)
+        ->paginate(10)
+        ->appends(request(['name']));
+        return view('mantenedor.game.index', compact('games', 'statuses'));
     }
 
     /**

@@ -15,6 +15,45 @@
                     </a>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            <h4>Filtros</h4>
+                        </div>
+                    </div>
+                    <form action="{{ route('game.index') }}" id="form-filtros">
+                        <div class="row">
+                            <div class="col-12 col-md-2">
+                                <input type="text" class="form-control" name="id" placeholder="ID"
+                                    onblur="formSubmit();" value="{{ request('id') }}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <input type="text" class="form-control" name="name" placeholder="Nombre"
+                                    onblur="formSubmit();" value="{{ request('name') }}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <input type="text" class="form-control" name="description" placeholder="Descripcion"
+                                    onblur="formSubmit();" value="{{ request('description') }}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <select name="status_id" id="status_id" class="form-control" onchange="formSubmit();">
+                                    <option value="">Seleccione un Estado</option>
+                                    @foreach ($statuses as $status)
+                                        <option {{ request('status_id') == $status->id ? 'selected' : '' }}
+                                            value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <button class="btn btn-primary" type="submit">Filtrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
             <div class="row">
                 <div class="col-12 col-md-12">
                     <table class="table">
@@ -43,7 +82,8 @@
                                             id="delete-{{ $game->id }}">
                                             @method('DELETE')
                                             @csrf
-                                            <a href="{{ route('game.show', $game->id) }}" class="btn" title="Ver game">
+                                            <a href="{{ route('game.show', $game->id) }}" class="btn"
+                                                title="Ver game">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('game.edit', $game->id) }}" class="btn text-info"
@@ -88,6 +128,10 @@
                     )
                 }
             })
+        }
+
+        function formSubmit() {
+            document.getElementById('form-filtros').submit();
         }
     </script>
 @endsection
