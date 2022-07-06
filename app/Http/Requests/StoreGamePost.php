@@ -28,7 +28,8 @@ class StoreGamePost extends FormRequest
             'description' => 'required',
             'status_id' => 'required',
             'url_game' => 'required',
-            'url_image' => 'required',
+            'url_image' => 'required_without:file',
+            'file' => 'required_without:url_image',
 
         ];
     }

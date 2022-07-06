@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'public_dir' => [
+            'driver' => 'local',
+            'root' => public_path('/'),
+            'visibility' => 'public',
+        ]
 
     ],
 

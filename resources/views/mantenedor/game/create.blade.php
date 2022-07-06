@@ -11,7 +11,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <form method="POST" action="{{ route('game.store') }}">
+                    <form method="POST" action="{{ route('game.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre del Juego</label>
@@ -46,9 +46,10 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">URL de la Imagen</label>
+                            <label for="name" class="form-label">Imagen</label>
                             <input type="text" class="form-control" id="url_image" name="url_image"
                                 value="{{ old('url_image') }}">
+                            <input type="file" name="file" id="file" class="form-control mt-1">
                             @error('url_image')
                                 <small class="text-danger"> {{ $message }}</small>
                             @enderror

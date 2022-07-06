@@ -3,6 +3,7 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StatusController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,11 @@ Auth::routes();
 route::middleware('auth')->group(function () {
     Route::resource('/game', GameController::class);
     Route::resource('/status', StatusController::class);
+});
+
+Route::get('/clear-cache', function () {
+    echo Artisan::call('config:clear');
+    echo Artisan::call('config:cache');
+    echo Artisan::call('cache:clear');
+    echo Artisan::call('route:clear');
 });

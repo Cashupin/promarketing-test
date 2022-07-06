@@ -5,13 +5,13 @@
         <div class="col-12 col-md-10 mx-auto card p-5">
             <div class="row">
                 <div class="col-12 col-md-12">
-                    <h3>Editar Estado</h3>
+                    <h3>Editar Juego</h3>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <form method="POST" action="{{ route('game.update', $game->id) }}">
+                    <form method="POST" action="{{ route('game.update', $game->id) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <div class="mb-3">
@@ -26,7 +26,9 @@
                             <label for="status_id">Estado del Juego</label>
                             <select name="status_id" id="status_id" class="form-control">
                                 @foreach ($statuses as $status)
-                                    <option value="{{ $status->id }}" {{ ($status->id === $game->status_id) ? 'selected' : '' }}>{{ $status->name }}</option>
+                                    <option value="{{ $status->id }}"
+                                        {{ $status->id === $game->status_id ? 'selected' : '' }}>{{ $status->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -50,6 +52,7 @@
                             <label for="name" class="form-label">URL de la Imagen</label>
                             <input type="text" class="form-control" id="url_image" name="url_image"
                                 value="{{ old('url_image', $game->url_image) }}">
+                            <input type="file" name="file" id="file" class="form-control mt-1">
                             @error('url_image')
                                 <small class="text-danger"> {{ $message }}</small>
                             @enderror
