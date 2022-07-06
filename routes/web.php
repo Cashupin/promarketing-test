@@ -3,6 +3,7 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StatusController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Auth::routes();
 
-Route::resource('/game', GameController::class);
-Route::resource('/status', StatusController::class);
+route::middleware('auth')->group(function () {
+    Route::resource('/game', GameController::class);
+    Route::resource('/status', StatusController::class);
+});
