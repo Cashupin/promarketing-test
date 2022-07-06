@@ -100,8 +100,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $games->links() }}
                 </div>
+                {{ $games->links() }}
             </div>
         </div>
     </div>

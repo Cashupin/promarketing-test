@@ -19,8 +19,8 @@ class GameController extends Controller
             ->searchNameGame($request->name)
             ->searchDescriptionGame($request->description)
             ->searchStatusGame($request->status_id)
-            ->paginate(10)
-            ->appends(request(['name']));
+            ->paginate(5)
+            ->appends(request(['name', 'id', 'description', 'status_id']));
         return view('mantenedor.game.index', compact('games', 'statuses'));
     }
 
